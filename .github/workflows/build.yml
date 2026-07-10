@@ -24,8 +24,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Force stable Gradle version
+        run: |
+          sed -i 's#distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-8.7-bin.zip#' gradle/wrapper/gradle-wrapper.properties
+          cat gradle/wrapper/gradle-wrapper.properties
+
       - name: Build Debug APK
-        run: ./gradlew android:assembleDebug --no-configuration-cache
+        run: ./gradlew android:assembleDebug --no-daemon --no-build-cache
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
