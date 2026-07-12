@@ -27,13 +27,3 @@ jobs:
       - name: Force stable Gradle version
         run: |
           sed -i 's#distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-8.7-bin.zip#' gradle/wrapper/gradle-wrapper.properties
-          cat gradle/wrapper/gradle-wrapper.properties
-
-      - name: Build Debug APK
-        run: ./gradlew android:assembleDebug --no-daemon --no-build-cache -Pandroid.enableR8=false
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug-apk
-          path: android/build/outputs/apk/**/*.apk
